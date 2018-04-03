@@ -9,7 +9,7 @@ import setup.Card.Suit;
  */
 public class Foundation {
 	private Stack<Card> cards;
-	private Suit foundationSuit;
+	public final Suit foundationSuit;
 	
 	/**
 	 * initializes a foundation
@@ -56,14 +56,5 @@ public class Foundation {
 	 */
 	public boolean isEmpty() {
 		return cards.isEmpty();
-	}
-	
-	/**
-	 * checks the foundation's suit
-	 * 
-	 * @return the suit type of the foundation
-	 */
-	public Suit foundationSuit() {
-		return foundationSuit;
 	}
 }
