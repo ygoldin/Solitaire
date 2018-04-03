@@ -38,17 +38,6 @@ public class Deck {
 		return cards.remove(idx);
 	}
 	
-	/**
-	 * removes the first card from the deck
-	 * 
-	 * @return the removed card
-	 * @throws IllegalStateException if the deck is empty
-	 */
-	public Card removeFirstCard() {
-		checkNotEmpty();
-		return cards.remove(0);
-	}
-	
 	//throws exception if the deck is empty and someone wants to remove something
 	private void checkNotEmpty() {
 		if(isEmpty()) {
@@ -63,16 +52,5 @@ public class Deck {
 	 */
 	public boolean isEmpty() {
 		return cards.isEmpty();
-	}
-	
-	/**
-	 * adds the card to the end of the deck
-	 * 
-	 * @param card The card to add
-	 * @throws IllegalArgumentException if the card is null
-	 */
-	public void addCard(Card card) {
-		Card.checkNullCard(card);
-		cards.add(card);
 	}
 }
