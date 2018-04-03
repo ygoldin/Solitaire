@@ -7,7 +7,7 @@ import setup.Card.Suit;
  * Foundation represents one of the four piles on which a whole suit is built up
  * @author Yael Goldin
  */
-public class Foundation {
+public class Foundation extends SolitairePile {
 	private Stack<Card> cards;
 	public final Suit foundationSuit;
 	
@@ -43,17 +43,11 @@ public class Foundation {
 	 * @throws IllegalStateException if the foundation is empty
 	 */
 	public Card removeTopCard() {
-		if(isEmpty()) {
-			throw new IllegalStateException("empty foundation");
-		}
+		exceptionIfEmpty();
 		return cards.pop();
 	}
 	
-	/**
-	 * checks if the foundation is empty
-	 * 
-	 * @return true if it is empty, false otherwise
-	 */
+	@Override
 	public boolean isEmpty() {
 		return cards.isEmpty();
 	}

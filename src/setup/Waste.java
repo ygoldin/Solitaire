@@ -7,7 +7,7 @@ import java.util.List;
  * Waste represents the waste pile of cards from the stock pile
  * @author Yael Goldin
  */
-public class Waste {
+public class Waste extends SolitairePile {
 	private List<Card> cards;
 	
 	/**
@@ -35,17 +35,11 @@ public class Waste {
 	 * @throws IllegalStateException if the waste pile is empty
 	 */
 	public Card removeTopCard() {
-		if(isEmpty()) {
-			throw new IllegalStateException("empty waste pile");
-		}
+		exceptionIfEmpty();
 		return cards.remove(cards.size() - 1);
 	}
 	
-	/**
-	 * checks if the waste pile is empty
-	 * 
-	 * @return true if it is empty, false otherwise
-	 */
+	@Override
 	public boolean isEmpty() {
 		return cards.isEmpty();
 	}

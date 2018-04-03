@@ -3,7 +3,7 @@ package setup;
 import java.util.LinkedList;
 import java.util.Queue;
 
-public class Stock {
+public class Stock extends SolitairePile {
 	private Queue<Card> cards;
 	
 	public Stock(Deck cardDeck) {
@@ -19,19 +19,13 @@ public class Stock {
 	 * @return the removed card
 	 * @throws IllegalStateException if the stock is empty
 	 */
-	public Card removeFirstCard() {
-		checkNotEmpty();
+	public Card removeTopCard() {
+		exceptionIfEmpty();
 		return cards.remove();
 	}
 	
+	@Override
 	public boolean isEmpty() {
 		return cards.isEmpty();
-	}
-	
-	//throws exception if the deck is empty and someone wants to remove something
-	private void checkNotEmpty() {
-		if(isEmpty()) {
-			throw new IllegalStateException("no cards in deck");
-		}
 	}
 }

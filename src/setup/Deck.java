@@ -9,7 +9,7 @@ import setup.Card.Suit;
  * Deck represents a whole 52-card deck
  * @author Yael Goldin
  */
-public class Deck {
+public class Deck extends SolitairePile {
 	private List<Card> cards;
 	private Random rand;
 	
@@ -33,23 +33,12 @@ public class Deck {
 	 * @throws IllegalStateException if the deck is empty
 	 */
 	public Card removeRandomCard() {
-		checkNotEmpty();
+		exceptionIfEmpty();
 		int idx = rand.nextInt(cards.size());
 		return cards.remove(idx);
 	}
 	
-	//throws exception if the deck is empty and someone wants to remove something
-	private void checkNotEmpty() {
-		if(isEmpty()) {
-			throw new IllegalStateException("no cards in deck");
-		}
-	}
-	
-	/**
-	 * checks if the deck is empty
-	 * 
-	 * @return true if it is, false otherwise
-	 */
+	@Override
 	public boolean isEmpty() {
 		return cards.isEmpty();
 	}
