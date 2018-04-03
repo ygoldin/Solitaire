@@ -1,20 +1,19 @@
 package setup;
 
-import java.util.LinkedList;
-import java.util.List;
+import java.util.Stack;
 
 /**
  * Waste represents the waste pile of cards from the stock pile
  * @author Yael Goldin
  */
 public class Waste extends SolitairePile {
-	private List<Card> cards;
+	private Stack<Card> cards;
 	
 	/**
 	 * initializes an empty waste pile
 	 */
 	public Waste() {
-		cards = new LinkedList<>();
+		cards = new Stack<>();
 	}
 	
 	/**
@@ -25,7 +24,7 @@ public class Waste extends SolitairePile {
 	 */
 	public void addCard(Card card) {
 		Card.checkNullCard(card);
-		cards.add(card);
+		cards.push(card);
 	}
 	
 	/**
@@ -36,7 +35,7 @@ public class Waste extends SolitairePile {
 	 */
 	public Card removeTopCard() {
 		exceptionIfEmpty();
-		return cards.remove(cards.size() - 1);
+		return cards.pop();
 	}
 	
 	@Override
