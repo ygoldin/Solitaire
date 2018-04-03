@@ -9,6 +9,8 @@ public class Card {
 	private int value;
 	private static final String ACE = "A";
 	private static final String[] ROYALTY = {"J", "Q", "K"};
+	public static final int SMALLEST_VALUE = 1;
+	public static final int LARGEST_VALUE = 13;
 	
 	/**
 	 * the different suits possible
@@ -22,9 +24,11 @@ public class Card {
 	 * 
 	 * @param value The value of the card (1 = Ace, 2-10, 11-13 = Jack/Queen/King)
 	 * @param suit The suit of the card
+	 * @throws IllegalArgumentException if the suit is null or the value is outside of the range
+	 * [SMALLEST_VALUE, LARGEST_VALUE] inclusive
 	 */
 	public Card(int value, Suit suit) {
-		if(value < 1 || value > 12 || suit == null) {
+		if(value < SMALLEST_VALUE || value > LARGEST_VALUE || suit == null) {
 			throw new IllegalArgumentException("invalid value/suit");
 		}
 		this.value = value;
