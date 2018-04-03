@@ -5,8 +5,8 @@ package setup;
  * @author Yael Goldin
  */
 public class Card {
-	private final Suit suit;
-	private final int value;
+	public final Suit suit;
+	public final int value;
 	private static final String ACE = "A";
 	private static final String[] ROYALTY = {"J", "Q", "K"};
 	public static final int SMALLEST_VALUE = 1;
@@ -51,15 +51,6 @@ public class Card {
 	 */
 	public boolean isBlack() {
 		return suit == Suit.CLUBS || suit == Suit.SPADES;
-	}
-	
-	/**
-	 * returns the value of the card
-	 * 
-	 * @return 1 if it's an Ace, 2-10 for a numbered card, 11-13 for Jack/Queen/King
-	 */
-	public int getValue() {
-		return value;
 	}
 	
 	@Override
