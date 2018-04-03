@@ -72,9 +72,7 @@ public class Deck {
 	 * @throws IllegalArgumentException if the card is null
 	 */
 	public void addCard(Card card) {
-		if(card == null) {
-			throw new IllegalArgumentException("null card");
-		}
+		Card.checkNullCard(card);
 		cards.add(card);
 	}
 }

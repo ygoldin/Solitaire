@@ -5,8 +5,8 @@ package setup;
  * @author Yael Goldin
  */
 public class Card {
-	private Suit suit;
-	private int value;
+	private final Suit suit;
+	private final int value;
 	private static final String ACE = "A";
 	private static final String[] ROYALTY = {"J", "Q", "K"};
 	public static final int SMALLEST_VALUE = 1;
@@ -70,6 +70,18 @@ public class Card {
 			return "" + value;
 		} else {
 			return ROYALTY[value - 11];
+		}
+	}
+	
+	/**
+	 * checks for null cards
+	 * 
+	 * @param card The card to check
+	 * @throws IllegalArgumentException if the card is null
+	 */
+	public static void checkNullCard(Card card) {
+		if(card == null) {
+			throw new IllegalArgumentException("null card");
 		}
 	}
 }
