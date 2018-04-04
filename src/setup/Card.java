@@ -53,6 +53,16 @@ public class Card {
 		return suit == Suit.CLUBS || suit == Suit.SPADES;
 	}
 	
+	/**
+	 * checks if the given card is of the opposite color to this card
+	 * 
+	 * @param otherCard The card to compare to
+	 * @return true if they are opposite colors (one is red, one is black), false if they are the same color
+	 */
+	public boolean isOtherColor(Card otherCard) {
+		return isBlack() != otherCard.isBlack();
+	}
+	
 	@Override
 	public String toString() {
 		if(value == 1) {
