@@ -38,6 +38,15 @@ public class Deck extends SolitairePile {
 		return cards.remove(idx);
 	}
 	
+	/**
+	 * finds the size of the deck
+	 * 
+	 * @return the number of cards in the deck
+	 */
+	public int size() {
+		return cards.size();
+	}
+	
 	@Override
 	public boolean isEmpty() {
 		return cards.isEmpty();
