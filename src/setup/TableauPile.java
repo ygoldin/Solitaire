@@ -34,29 +34,63 @@ public class TableauPile extends SolitairePile {
 	 * 
 	 * @param newCard the card to add
 	 * @throws IllegalArgumentException if the card is null
-	 * @throws IllegalArgumentException if the pile is empty and the card is not a King
-	 * @throws IllegalArgumentException if the pile isn't empty and the given card is of the same color
-	 * as the top card in the pile
-	 * @throws IllegalArgumentException if the pile isn't empty and the given card's value is not one less
-	 * than the value of the top card
+	 * @throws IllegalArgumentException if the card cannot be added to the pile
 	 */
 	public void addVisibleCard(Card newCard) {
 		Card.checkNullCard(newCard);
+		if(!canAddToPile(newCard)) {
+			throw new IllegalArgumentException("cannot add card to pile");
+		}
+		cards.add(newCard);
+		visibleCards++;
+	}
+	
+	/**
+	 * adds the given number of cards from the other pile onto this one
+	 * does nothing if it was not a valid move
+	 * 
+	 * @param otherPile The pile to move cards from
+	 * @param numberOfCards The number of cards to move from it to this one
+	 * @throws IllegalArgumentException if the other pile is null or does not have enough cards to move
+	 * @throws IllegalArgumentException if numberOfCards < 1
+	 * @return true if the move was successful, false otherwise
+	 */
+	public boolean addStackOfCards(TableauPile otherPile, int numberOfCards) {
+		if(otherPile == null || otherPile.cards.size() < numberOfCards) {
+			throw new IllegalArgumentException("other pile not valid");
+		} else if(numberOfCards < 1) {
+			throw new IllegalArgumentException("have to move at least one card");
+		}
+		Stack<Card> temp = new Stack<>();
+		for(int i = 0; i < numberOfCards; i++) {
+			temp.add(otherPile.cards.pop());
+		}
+		Stack<Card> addTo;
+		if(!canAddToPile(temp.peek())) {
+			addTo = otherPile.cards;
+		} else {
+			addTo = cards;
+		}
+		while(!temp.isEmpty()) {
+			addTo.push(temp.pop());
+		}
+		return addTo == cards;
+	}
+	
+	/**
+	 * checks if you can add the given card to the pile
+	 * 
+	 * @param newCard The card to add
+	 * @return true if the pile is empty and the card is a King, or
+	 * the pile isn't empty and the given card is of the opposite color to the top card on the pile, or
+	 * the pile isn't empty and the given card's value is one less than the value of the top card
+	 */
+	public boolean canAddToPile(Card newCard) {
 		if(isEmpty()) {
-			if(newCard.value != Card.LARGEST_VALUE) {
-				throw new IllegalArgumentException("can only put king in empty pile");
-			}
-			cards.add(newCard);
-			visibleCards++;
+			return newCard.value == Card.LARGEST_VALUE;
 		} else {
 			Card topCard = cards.peek();
-			if(!topCard.isOtherColor(newCard)) {
-				throw new IllegalArgumentException("can only place cards of alternating color");
-			} else if(newCard.value != topCard.value - 1) {
-				throw new IllegalArgumentException("can only place cards in immediate descending order");
-			}
-			cards.add(newCard);
-			visibleCards++;
+			return topCard.isOtherColor(newCard) && newCard.value == topCard.value - 1;
 		}
 	}
 
