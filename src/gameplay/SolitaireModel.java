@@ -38,9 +38,11 @@ public class SolitaireModel {
 	/**
 	 * moves all of the cards from the waste pile into the stock pile
 	 * 
+	 * @throws IllegalStateException if the game is over
 	 * @throws IllegalStateException if the stock isn't empty or the waste is empty
 	 */
 	public void moveWasteToStock() {
+		exceptionIfGameIsOver();
 		if(!stockIsEmpty()) {
 			throw new IllegalStateException("stock is not empty");
 		} else if(wasteIsEmpty()) {
@@ -52,9 +54,11 @@ public class SolitaireModel {
 	/**
 	 * moves the top card from the stock pile onto the waste pile
 	 * 
+	 * @throws IllegalStateException if the game is over
 	 * @throws IllegalStateException if the stock is empty
 	 */
 	public void moveTopStockCardToWaste() {
+		exceptionIfGameIsOver();
 		if(stockIsEmpty()) {
 			throw new IllegalStateException("stock is empty");
 		}
@@ -123,5 +127,12 @@ public class SolitaireModel {
 			}
 		}
 		return true;
+	}
+	
+	//throws exception if a move is attempted when the game is over
+	private void exceptionIfGameIsOver() {
+		if(gameOver()) {
+			throw new IllegalStateException("game is over");
+		}
 	}
 }
