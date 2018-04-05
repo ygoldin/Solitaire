@@ -38,6 +38,34 @@ public class Waste extends SolitairePile {
 		return cards.pop();
 	}
 	
+	/**
+	 * moves the top card from the waste pile to the given tableau pile
+	 * 
+	 * @param pile the tableau pile to move the card to
+	 * @throws IllegalStateException if the waste pile is empty
+	 */
+	public void moveTopCard(TableauPile pile) {
+		exceptionIfEmpty();
+		if(!pile.canAddToPile(cards.peek())) {
+			throw new IllegalArgumentException("cannot move card to the pile");
+		}
+		pile.addVisibleCard(cards.pop());
+	}
+	
+	/**
+	 * moves the top card from the waste pile to the given foundation pile
+	 * 
+	 * @param pile the foundation pile to move the card to
+	 * @throws IllegalStateException if the waste pile is empty
+	 */
+	public void moveTopCard(Foundation foundation) {
+		exceptionIfEmpty();
+		if(!foundation.canAddCard(cards.peek())) {
+			throw new IllegalArgumentException("cannot move card to the foundation");
+		}
+		foundation.addCard(cards.pop());
+	}
+	
 	@Override
 	public boolean isEmpty() {
 		return cards.isEmpty();

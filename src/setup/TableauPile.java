@@ -93,6 +93,20 @@ public class TableauPile extends SolitairePile {
 			return topCard.isOtherColor(newCard) && newCard.value == topCard.value - 1;
 		}
 	}
+	
+	/**
+	 * moves the top card from the tableau pile to the given foundation pile
+	 * 
+	 * @param pile the foundation pile to move the card to
+	 * @throws IllegalStateException if the tableau pile is empty
+	 */
+	public void moveTopCard(Foundation foundation) {
+		exceptionIfEmpty();
+		if(!foundation.canAddCard(cards.peek())) {
+			throw new IllegalArgumentException("cannot move card to the foundation");
+		}
+		foundation.addCard(cards.pop());
+	}
 
 	@Override
 	public boolean isEmpty() {
