@@ -28,10 +28,24 @@ public class SolitaireModel {
 		waste = new Waste();
 		stock = new Stock(startingDeck, waste);
 		
-		Card.Suit[] suits = setup.Card.Suit.values();
+		Card.Suit[] suits = Card.Suit.values();
 		foundations = new Foundation[suits.length];
 		for(int i = 0; i < suits.length; i++) {
 			foundations[i] = new Foundation(suits[i]);
 		}
+	}
+	
+	/**
+	 * checks if the game is over
+	 * 
+	 * @return true if all of the foundations are filled, false otherwise
+	 */
+	public boolean gameOver() {
+		for(Foundation foundation : foundations) {
+			if(!foundation.isFull()) {
+				return false;
+			}
+		}
+		return true;
 	}
 }
