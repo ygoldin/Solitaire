@@ -40,6 +40,7 @@ public class Foundation extends SolitairePile {
 	 * 
 	 * @param card The card to add to the foundation
 	 * @return true if:
+	 * 		the foundation is not full, and
 	 * 		the card matches the suit of the foundation, and
 	 * 		the foundation is empty and the card is an ace, or
 	 * 		the foundation is not empty and the card's value is one more than the top card currently
@@ -47,6 +48,9 @@ public class Foundation extends SolitairePile {
 	 */
 	public boolean canAddCard(Card card) {
 		Card.checkNullCard(card);
+		if(isFull()) {
+			return false;
+		}
 		boolean addAce = isEmpty() && card.value == Card.SMALLEST_VALUE;
 		boolean addOther = (!isEmpty() && card.value == cards.peek().value + 1);
 		return card.suit == foundationSuit && (addAce || addOther);
@@ -65,6 +69,15 @@ public class Foundation extends SolitairePile {
 			throw new IllegalArgumentException("cannot move card to the pile");
 		}
 		pile.addVisibleCard(cards.pop());
+	}
+	
+	/**
+	 * checks if the foundation is full and no more cards can be added to it
+	 * 
+	 * @return true if it is, false otherwise
+	 */
+	public boolean isFull() {
+		return cards.size() == Card.LARGEST_VALUE - Card.SMALLEST_VALUE + 1;
 	}
 	
 	@Override
