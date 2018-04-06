@@ -4,7 +4,6 @@ import java.util.Stack;
 
 public class TableauPile extends SolitairePile {
 	private Stack<Card> cards;
-	private int hiddenCards;
 	private int visibleCards;
 	
 	/**
@@ -25,7 +24,6 @@ public class TableauPile extends SolitairePile {
 		for(int i = 0; i < initialCardsNum; i++) {
 			cards.push(deck.removeRandomCard());
 		}
-		hiddenCards = initialCardsNum - 1;
 		visibleCards = 1;
 	}
 	
@@ -112,16 +110,9 @@ public class TableauPile extends SolitairePile {
 			throw new IllegalArgumentException("cannot move card to the foundation");
 		}
 		foundation.addCard(cards.pop());
-		if(visibleCards == 1) {
-			if(hiddenCards > 0) {
-				hiddenCards--; //reveal new card
-			} else {
-				assert(isEmpty()) : "should be empty";
-				visibleCards = 0; //no more cards in pile
-			}
-		} else {
+		if(visibleCards > 1 || isEmpty()) { //empty after removing the one card left
 			visibleCards--;
-		}
+		} 
 	}
 
 	@Override
@@ -144,7 +135,7 @@ public class TableauPile extends SolitairePile {
 	 * @return the number of hidden cards
 	 */
 	public int numHiddenCards() {
-		return hiddenCards;
+		return cards.size() - visibleCards;
 	}
 
 }
