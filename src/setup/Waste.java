@@ -28,6 +28,17 @@ public class Waste extends SolitairePile {
 	}
 	
 	/**
+	 * peeks at the top card from the waste pile without removing it
+	 * 
+	 * @return the removed card
+	 * @throws IllegalStateException if the waste pile is empty
+	 */
+	public Card peekAtTopCard() {
+		exceptionIfEmpty();
+		return cards.peek();
+	}
+	
+	/**
 	 * removes the top card from the waste pile
 	 * 
 	 * @return the removed card

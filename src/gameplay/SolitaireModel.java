@@ -45,9 +45,8 @@ public class SolitaireModel {
 		exceptionIfGameIsOver();
 		if(!stockIsEmpty()) {
 			throw new IllegalStateException("stock is not empty");
-		} else if(wasteIsEmpty()) {
-			throw new IllegalStateException("waste is empty");
 		}
+		checkEmptyWaste();
 		stock.moveCardsFromWaste();
 	}
 	
@@ -63,6 +62,35 @@ public class SolitaireModel {
 			throw new IllegalStateException("stock is empty");
 		}
 		stock.removeTopCard();
+	}
+	
+	/**
+	 * moves the top card from the waste pile to the given foundation
+	 * 
+	 * @param foundationIndex Which foundation pile to move the card to
+	 * @throws IllegalStateException if the waste pile is empty
+	 * @throws IllegalArgumentException if given an invalid foundation index
+	 * @throws IllegalArgumentException if the top card cannot be moved to the foundation
+	 */
+	public void moveTopWasteCardToFoundation(int foundationIndex) {
+		if(!canMoveTopWasteCardToFoundation(foundationIndex)) {
+			throw new IllegalArgumentException("cannot move top waste card to foundation");
+		}
+		foundations[foundationIndex].addCard(waste.removeTopCard());		
+	}
+	
+	/**
+	 * checks if it is legal to move the top card from the waste pile to the given foundation
+	 * 
+	 * @param foundationIndex Which foundation pile to move the card to
+	 * @return true if the top card can be moved to the given foundation, false otherwise
+	 * @throws IllegalStateException if the waste pile is empty
+	 * @throws IllegalArgumentException if given an invalid foundation index
+	 */
+	public boolean canMoveTopWasteCardToFoundation(int foundationIndex) {
+		checkEmptyWaste();
+		checkInvalidFoundationIndex(foundationIndex);
+		return foundations[foundationIndex].canAddCard(waste.peekAtTopCard());
 	}
 	
 	/* ************************check if any pile is empty*************************************** */
@@ -93,9 +121,7 @@ public class SolitaireModel {
 	 * @throws IllegalArgumentException if index is outside of the range [0, TABLEAU_SIZE] inclusive
 	 */
 	public boolean tableauPileIsEmpty(int index) {
-		if(index < 0 || index > tableau.length) {
-			throw new IllegalArgumentException("invalid tableau pile index");
-		}
+		checkInvalidTableauIndex(index);
 		return tableau[index].isEmpty();
 	}
 	
@@ -107,10 +133,31 @@ public class SolitaireModel {
 	 * @throws IllegalArgumentException if index is outside of the range [0, 3] inclusive
 	 */
 	public boolean foundationIsEmpty(int index) {
+		checkInvalidFoundationIndex(index);
+		return foundations[index].isEmpty();
+	}
+	
+	/* ********************************exception checks***************************************** */
+	
+	//throws exception if the waste is empty
+	private void checkEmptyWaste() {
+		if(wasteIsEmpty()) {
+			throw new IllegalStateException("waste is empty");
+		}
+	}
+	
+	//throws exception for invalid tableau pile index
+	private void checkInvalidTableauIndex(int index) {
+		if(index < 0 || index > tableau.length) {
+			throw new IllegalArgumentException("invalid tableau pile index");
+		}
+	}
+	
+	//throws exception for invalid foundation pile index
+	private void checkInvalidFoundationIndex(int index) {
 		if(index < 0 || index > foundations.length) {
 			throw new IllegalArgumentException("invalid foundation index");
 		}
-		return foundations[index].isEmpty();
 	}
 	
 	/* ***************************************************************************************** */
