@@ -80,6 +80,23 @@ public class SolitaireModel {
 	}
 	
 	/**
+	 * moves the top card from the waste pile to the given tableau pile
+	 * 
+	 * @param tableauIndex Which tableau pile to move the card to
+	 * @throws IllegalStateException if the waste pile is empty
+	 * @throws IllegalArgumentException if given an invalid tableau index
+	 * @throws IllegalArgumentException if the top card cannot be moved to the tableau
+	 */
+	public void moveTopWasteCardToTableau(int tableauIndex) {
+		if(!canMoveTopWasteCardToTableau(tableauIndex)) {
+			throw new IllegalArgumentException("cannot move top waste card to tableau pile");
+		}
+		tableau[tableauIndex].addVisibleCard(waste.removeTopCard());		
+	}
+	
+	/* ************************check if top waste card can be moved***************************** */
+	
+	/**
 	 * checks if it is legal to move the top card from the waste pile to the given foundation
 	 * 
 	 * @param foundationIndex Which foundation pile to move the card to
@@ -91,6 +108,20 @@ public class SolitaireModel {
 		checkEmptyWaste();
 		checkInvalidFoundationIndex(foundationIndex);
 		return foundations[foundationIndex].canAddCard(waste.peekAtTopCard());
+	}
+	
+	/**
+	 * checks if it is legal to move the top card from the waste pile to the given tableau pile
+	 * 
+	 * @param tableauIndex Which tableau pile to move the card to
+	 * @return true if the top card can be moved to the given tableau pile, false otherwise
+	 * @throws IllegalStateException if the waste pile is empty
+	 * @throws IllegalArgumentException if given an invalid tableau index
+	 */
+	public boolean canMoveTopWasteCardToTableau(int tableauIndex) {
+		checkEmptyWaste();
+		checkInvalidTableauIndex(tableauIndex);
+		return tableau[tableauIndex].canAddToPile(waste.peekAtTopCard());
 	}
 	
 	/* ************************check if any pile is empty*************************************** */
