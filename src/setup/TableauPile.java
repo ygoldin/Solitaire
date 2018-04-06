@@ -56,7 +56,7 @@ public class TableauPile extends SolitairePile {
 	 * @return true if the move was successful, false otherwise
 	 */
 	public boolean addStackOfCards(TableauPile otherPile, int numberOfCards) {
-		if(otherPile == null || otherPile.cards.size() < numberOfCards) {
+		if(otherPile == null || otherPile.visibleCards < numberOfCards) {
 			throw new IllegalArgumentException("other pile not valid");
 		} else if(numberOfCards < 1) {
 			throw new IllegalArgumentException("have to move at least one card");
@@ -74,7 +74,13 @@ public class TableauPile extends SolitairePile {
 		while(!temp.isEmpty()) {
 			addTo.push(temp.pop());
 		}
-		return addTo == cards;
+		
+		if(addTo == cards) {
+			visibleCards += numberOfCards;
+			otherPile.visibleCards -= numberOfCards;
+			return true;
+		}
+		return false;
 	}
 	
 	/**
@@ -106,11 +112,39 @@ public class TableauPile extends SolitairePile {
 			throw new IllegalArgumentException("cannot move card to the foundation");
 		}
 		foundation.addCard(cards.pop());
+		if(visibleCards == 1) {
+			if(hiddenCards > 0) {
+				hiddenCards--; //reveal new card
+			} else {
+				assert(isEmpty()) : "should be empty";
+				visibleCards = 0; //no more cards in pile
+			}
+		} else {
+			visibleCards--;
+		}
 	}
 
 	@Override
 	public boolean isEmpty() {
 		return cards.isEmpty();
+	}
+	
+	/**
+	 * checks how many cards are visible on the pile
+	 * 
+	 * @return the number of visible cards
+	 */
+	public int numVisibleCards() {
+		return visibleCards;
+	}
+	
+	/**
+	 * checks how many cards are hidden on the pile
+	 * 
+	 * @return the number of hidden cards
+	 */
+	public int numHiddenCards() {
+		return hiddenCards;
 	}
 
 }

@@ -124,6 +124,20 @@ public class SolitaireModel {
 		return tableau[tableauIndex].canAddToPile(waste.peekAtTopCard());
 	}
 	
+	/* ************************move tableau cards around**************************************** */
+	
+	public boolean moveCards(int startTableauIndex, int endTableauIndex, int cardsToMove) {
+		checkInvalidTableauIndex(startTableauIndex);
+		checkInvalidTableauIndex(endTableauIndex);
+		if(startTableauIndex == endTableauIndex) {
+			return false;
+		}
+		TableauPile start = tableau[startTableauIndex];
+		//TODO; check if it has this many cards
+		TableauPile end = tableau[endTableauIndex];
+		return end.addStackOfCards(start, cardsToMove);
+	}
+	
 	/* ************************check if any pile is empty*************************************** */
 	
 	/**
