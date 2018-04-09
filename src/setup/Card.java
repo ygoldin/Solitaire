@@ -65,12 +65,13 @@ public class Card {
 	
 	@Override
 	public String toString() {
+		char suitType = suit.toString().charAt(0);
 		if(value == 1) {
-			return ACE;
+			return ACE + suitType;
 		} else if(value >= 2 && value <= 10) {
-			return "" + value;
+			return "" + value + suitType;
 		} else {
-			return ROYALTY[value - 11];
+			return ROYALTY[value - (LARGEST_VALUE - SMALLEST_VALUE - 1)] + suitType;
 		}
 	}
 	
