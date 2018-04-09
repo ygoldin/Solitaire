@@ -227,4 +227,19 @@ public class SolitaireModel {
 			throw new IllegalStateException("game is over");
 		}
 	}
+	
+	@Override
+	public String toString() {
+		String result = "Stock: " + stock;
+		result += "\nWaste: " + waste;
+		result += "\nFoundations:";
+		for(Foundation f : foundations) {
+			result += "\n\t" + f;
+		}
+		result += "\nTableau";
+		for(TableauPile t : tableau) {
+			result += "\n\t" + t;
+		}
+		return result;
+	}
 }
