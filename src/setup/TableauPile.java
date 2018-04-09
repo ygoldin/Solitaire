@@ -137,5 +137,28 @@ public class TableauPile extends SolitairePile {
 	public int numHiddenCards() {
 		return cards.size() - visibleCards;
 	}
-
+	
+	@Override
+	public String toString() {
+		if(isEmpty() || numHiddenCards() == 0) {
+			return cards.toString();
+		}
+		Card topVisible = cards.pop();
+		String result = topVisible.toString();
+		Stack<Card> temp = new Stack<>();
+		temp.push(topVisible);
+		for(int i = 1; i < visibleCards; i++) {
+			Card visible = cards.pop();
+			result = visible.toString() + ", " + result;
+			temp.add(visible);
+		}
+		String hidden = "";
+		for(int i = 0; i < cards.size(); i++) {
+			hidden += "??, ";
+		}
+		while(!temp.isEmpty()) {
+			cards.push(temp.pop());
+		}
+		return "[" + hidden + result + "]";
+	}
 }
