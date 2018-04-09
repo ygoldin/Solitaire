@@ -84,4 +84,9 @@ public class Foundation extends SolitairePile {
 	public boolean isEmpty() {
 		return cards.isEmpty();
 	}
+	
+	@Override
+	public String toString() {
+		return cards.toString();
+	}
 }

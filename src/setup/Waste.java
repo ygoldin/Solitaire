@@ -81,4 +81,12 @@ public class Waste extends SolitairePile {
 	public boolean isEmpty() {
 		return cards.isEmpty();
 	}
+	
+	@Override
+	public String toString() {
+		if(!isEmpty()) {
+			return cards.peek().toString();
+		}
+		return "empty";
+	}
 }
