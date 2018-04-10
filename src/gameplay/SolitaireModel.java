@@ -126,14 +126,16 @@ public class SolitaireModel {
 	
 	/* ************************move tableau cards around**************************************** */
 	
-	public boolean moveCards(int startTableauIndex, int endTableauIndex, int cardsToMove) {
+	public boolean moveCardsWithinTableau(int startTableauIndex, int endTableauIndex, int cardsToMove) {
 		checkInvalidTableauIndex(startTableauIndex);
 		checkInvalidTableauIndex(endTableauIndex);
 		if(startTableauIndex == endTableauIndex) {
 			return false;
 		}
 		TableauPile start = tableau[startTableauIndex];
-		//TODO; check if it has this many cards
+		if(start.numVisibleCards() < cardsToMove) {
+			return false;
+		}
 		TableauPile end = tableau[endTableauIndex];
 		return end.addStackOfCards(start, cardsToMove);
 	}

@@ -90,7 +90,7 @@ public class Solitaire {
 		System.out.println("How many cards do you want to move?");
 		int cards = input.nextInt();
 		input.nextLine();
-		if(!model.moveCards(pile1, pile2, cards)) {
+		if(!model.moveCardsWithinTableau(pile1, pile2, cards)) {
 			System.out.println("Couldn't move cards");
 		}
 	}
