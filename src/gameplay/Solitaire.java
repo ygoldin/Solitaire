@@ -30,7 +30,7 @@ public class Solitaire {
 		} else if(choice == 4) {
 			moveTopWasteCardToTableau(model, input);
 		} else if(choice == 5) {
-			
+			moveCardsBetweenTableauPiles(model, input);
 		} else {
 			
 		}
@@ -58,13 +58,8 @@ public class Solitaire {
 		if(model.wasteIsEmpty()) {
 			System.out.println("Waste is empty");
 		} else {
-			int choice = 0;
 			int suits = Card.Suit.values().length;
-			while(choice < 1 || choice > suits) {
-				System.out.println("What foundation (1-" + suits + ")?");
-				choice = input.nextInt();
-				input.nextLine();
-			}
+			int choice = getFoundationOrTableau(model, input, suits, "What foundation (1-" + suits + ")? ");
 			if(!model.canMoveTopWasteCardToFoundation(choice)) {
 				System.out.println("Cannot move top waste card to foundation " + choice);
 			} else {
@@ -77,18 +72,46 @@ public class Solitaire {
 		if(model.wasteIsEmpty()) {
 			System.out.println("Waste is empty");
 		} else {
-			int choice = 0;
-			while(choice < 1 || choice > SolitaireModel.TABLEAU_SIZE) {
-				System.out.println("What tableau pile (1-" + SolitaireModel.TABLEAU_SIZE + ")?");
-				choice = input.nextInt();
-				input.nextLine();
-			}
+			int choice = getFoundationOrTableau(model, input, SolitaireModel.TABLEAU_SIZE,
+					"What tableau pile (1-" + SolitaireModel.TABLEAU_SIZE + ")?");
 			if(!model.canMoveTopWasteCardToTableau(choice)) {
 				System.out.println("Cannot move top waste card to tableau " + choice);
 			} else {
 				model.moveTopWasteCardToTableau(choice);
 			}
 		}
+	}
+	
+	private static void moveCardsBetweenTableauPiles(SolitaireModel model, Scanner input) {
+		int pile1 = getFoundationOrTableau(model, input, SolitaireModel.TABLEAU_SIZE,
+				"What tableau pile do you want to move from (1-" + SolitaireModel.TABLEAU_SIZE + ")?");
+		int pile2 = getFoundationOrTableau(model, input, SolitaireModel.TABLEAU_SIZE,
+				"What tableau pile do you want to move to (1-" + SolitaireModel.TABLEAU_SIZE + ")?");
+		System.out.println("How many cards do you want to move?");
+		int cards = input.nextInt();
+		input.nextLine();
+		if(!model.moveCards(pile1, pile2, cards)) {
+			System.out.println("Couldn't move cards");
+		}
+	}
+	
+	private static void moveTopTableauCardToFoundation(SolitaireModel model, Scanner input) {
+		int tableau = getFoundationOrTableau(model, input, SolitaireModel.TABLEAU_SIZE,
+				"What tableau pile (1-" + SolitaireModel.TABLEAU_SIZE + ")?");
+		int foundation = getFoundationOrTableau(model, input, Card.Suit.values().length,
+				"What foundation (1-" + Card.Suit.values().length + ")?");
+		//TODO
+	}
+	
+	private static int getFoundationOrTableau(SolitaireModel model, Scanner input, int max,
+			String message) {
+		int choice = 0;
+		while(choice < 1 || choice > max) {
+			System.out.println(message);
+			choice = input.nextInt();
+			input.nextLine();
+		}
+		return choice;
 	}
 	
 	//what kind of movement the client wants to do
