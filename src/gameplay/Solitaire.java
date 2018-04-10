@@ -2,6 +2,8 @@ package gameplay;
 
 import java.util.Scanner;
 
+import setup.Card;
+
 public class Solitaire {
 
 	public static void main(String[] args) {
@@ -18,9 +20,78 @@ public class Solitaire {
 	}
 	
 	private static void oneMove(SolitaireModel model, Scanner input) {
-		int choice = getMoveChoice(input);		
+		int choice = getMoveChoice(input);
+		if(choice == 1) {
+			flipStockCard(model);
+		} else if(choice == 2) {
+			moveWasteToStock(model);
+		} else if(choice == 3) {
+			moveTopWasteCardToFoundation(model, input);
+		} else if(choice == 4) {
+			moveTopWasteCardToTableau(model, input);
+		} else if(choice == 5) {
+			
+		} else {
+			
+		}
 	}
 	
+	private static void flipStockCard(SolitaireModel model) {
+		if(model.stockIsEmpty()) {
+			System.out.println("Stock is empty");
+		} else {
+			model.moveTopStockCardToWaste();
+		}
+	}
+	
+	private static void moveWasteToStock(SolitaireModel model) {
+		if(!model.stockIsEmpty()) {
+			System.out.println("Stock not empty");
+		} else if(model.wasteIsEmpty()) {
+			System.out.println("Waste is empty");
+		} else {
+			model.moveWasteToStock();
+		}
+	}
+	
+	private static void moveTopWasteCardToFoundation(SolitaireModel model, Scanner input) {
+		if(model.wasteIsEmpty()) {
+			System.out.println("Waste is empty");
+		} else {
+			int choice = 0;
+			int suits = Card.Suit.values().length;
+			while(choice < 1 || choice > suits) {
+				System.out.println("What foundation (1-" + suits + ")?");
+				choice = input.nextInt();
+				input.nextLine();
+			}
+			if(!model.canMoveTopWasteCardToFoundation(choice)) {
+				System.out.println("Cannot move top waste card to foundation " + choice);
+			} else {
+				model.moveTopWasteCardToFoundation(choice);
+			}
+		}
+	}
+	
+	private static void moveTopWasteCardToTableau(SolitaireModel model, Scanner input) {
+		if(model.wasteIsEmpty()) {
+			System.out.println("Waste is empty");
+		} else {
+			int choice = 0;
+			while(choice < 1 || choice > SolitaireModel.TABLEAU_SIZE) {
+				System.out.println("What tableau pile (1-" + SolitaireModel.TABLEAU_SIZE + ")?");
+				choice = input.nextInt();
+				input.nextLine();
+			}
+			if(!model.canMoveTopWasteCardToTableau(choice)) {
+				System.out.println("Cannot move top waste card to tableau " + choice);
+			} else {
+				model.moveTopWasteCardToTableau(choice);
+			}
+		}
+	}
+	
+	//what kind of movement the client wants to do
 	private static int getMoveChoice(Scanner input) {
 		printOptions();
 		int choice = input.nextInt();
