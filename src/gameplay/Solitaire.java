@@ -10,8 +10,9 @@ public class Solitaire {
 		do {
 			SolitaireModel model = new SolitaireModel();
 			Scanner input = new Scanner(System.in);
-			System.out.println(model);
 			while(!model.gameOver()) {
+				System.out.println(model);
+				System.out.println();
 				oneMove(model, input);
 			}
 			input.close();
@@ -32,7 +33,7 @@ public class Solitaire {
 		} else if(choice == 5) {
 			moveCardsBetweenTableauPiles(model, input);
 		} else {
-			
+			moveTopTableauCardToFoundation(model, input);
 		}
 	}
 	
@@ -87,7 +88,7 @@ public class Solitaire {
 				"What tableau pile do you want to move from (1-" + SolitaireModel.TABLEAU_SIZE + ")?");
 		int pile2 = getFoundationOrTableau(model, input, SolitaireModel.TABLEAU_SIZE,
 				"What tableau pile do you want to move to (1-" + SolitaireModel.TABLEAU_SIZE + ")?");
-		System.out.println("How many cards do you want to move?");
+		System.out.print("How many cards do you want to move? ");
 		int cards = input.nextInt();
 		input.nextLine();
 		if(!model.moveCardsWithinTableau(pile1, pile2, cards)) {
@@ -100,18 +101,21 @@ public class Solitaire {
 				"What tableau pile (1-" + SolitaireModel.TABLEAU_SIZE + ")?");
 		int foundation = getFoundationOrTableau(model, input, Card.Suit.values().length,
 				"What foundation (1-" + Card.Suit.values().length + ")?");
-		//TODO
+		if(!model.canMoveTableauCardToFoundation(tableau, foundation)) {
+			System.out.println("Couldn't move card");
+		}
+		model.moveTableauCardToFoundation(tableau, foundation);
 	}
 	
 	private static int getFoundationOrTableau(SolitaireModel model, Scanner input, int max,
 			String message) {
 		int choice = 0;
 		while(choice < 1 || choice > max) {
-			System.out.println(message);
+			System.out.print(message + " ");
 			choice = input.nextInt();
 			input.nextLine();
 		}
-		return choice;
+		return choice - 1; //0-based indexing
 	}
 	
 	//what kind of movement the client wants to do

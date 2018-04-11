@@ -140,6 +140,19 @@ public class SolitaireModel {
 		return end.addStackOfCards(start, cardsToMove);
 	}
 	
+	public void moveTableauCardToFoundation(int tableauIndex, int foundationIndex) {
+		if(!canMoveTableauCardToFoundation(tableauIndex, foundationIndex)) {
+			throw new IllegalArgumentException("can't move card to foundation");
+		}
+		tableau[tableauIndex].moveTopCard(foundations[foundationIndex]);
+	}
+	
+	public boolean canMoveTableauCardToFoundation(int tableauIndex, int foundationIndex) {
+		checkInvalidTableauIndex(tableauIndex);
+		checkInvalidFoundationIndex(foundationIndex);
+		return tableau[tableauIndex].canMoveTopCardToFoundation(foundations[foundationIndex]);		
+	}
+	
 	/* ************************check if any pile is empty*************************************** */
 	
 	/**
@@ -238,7 +251,7 @@ public class SolitaireModel {
 		for(Foundation f : foundations) {
 			result += "\n\t" + f;
 		}
-		result += "\nTableau";
+		result += "\nTableau:";
 		for(TableauPile t : tableau) {
 			result += "\n\t" + t;
 		}

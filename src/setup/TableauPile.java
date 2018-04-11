@@ -105,14 +105,18 @@ public class TableauPile extends SolitairePile {
 	 * @throws IllegalStateException if the tableau pile is empty
 	 */
 	public void moveTopCard(Foundation foundation) {
-		exceptionIfEmpty();
-		if(!foundation.canAddCard(cards.peek())) {
+		if(!canMoveTopCardToFoundation(foundation)) {
 			throw new IllegalArgumentException("cannot move card to the foundation");
 		}
 		foundation.addCard(cards.pop());
 		if(visibleCards > 1 || isEmpty()) { //empty after removing the one card left
 			visibleCards--;
 		} 
+	}
+	
+	public boolean canMoveTopCardToFoundation(Foundation foundation) {
+		exceptionIfEmpty();
+		return foundation.canAddCard(cards.peek());
 	}
 
 	@Override

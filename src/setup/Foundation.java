@@ -87,6 +87,6 @@ public class Foundation extends SolitairePile {
 	
 	@Override
 	public String toString() {
-		return cards.toString();
+		return foundationSuit.toString().charAt(0) + cards.toString();
 	}
 }
