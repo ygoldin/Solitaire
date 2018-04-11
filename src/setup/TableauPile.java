@@ -70,8 +70,8 @@ public class TableauPile extends SolitairePile {
 			moveAllFromStack(temp, cards);
 			visibleCards += numberOfCards;
 			otherPile.visibleCards -= numberOfCards;
-			if(!otherPile.isEmpty()) {
-				otherPile.visibleCards++; //new visible card
+			if(!otherPile.isEmpty() && otherPile.visibleCards == 0) {
+				otherPile.visibleCards = 1; //new visible card only if all visible cards were removed
 			}
 			return true;
 		}
