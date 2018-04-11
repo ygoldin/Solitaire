@@ -7,8 +7,8 @@ package setup;
 public class Card {
 	public final Suit suit;
 	public final int value;
-	private static final String ACE = "A";
-	private static final String[] ROYALTY = {"J", "Q", "K"};
+	private static final String[] REPRESENTATIONS = {"A", "2", "3", "4", "5", "6", "7", "8", "9", "10",
+			"J", "Q", "K"};
 	public static final int SMALLEST_VALUE = 1;
 	public static final int LARGEST_VALUE = 13;
 	
@@ -65,14 +65,7 @@ public class Card {
 	
 	@Override
 	public String toString() {
-		char suitType = suit.toString().charAt(0);
-		if(value == 1) {
-			return ACE + suitType;
-		} else if(value >= 2 && value <= 10) {
-			return "" + value + suitType;
-		} else {
-			return ROYALTY[value - (LARGEST_VALUE - SMALLEST_VALUE - 1)] + suitType;
-		}
+		return REPRESENTATIONS[value - 1] + suit.toString().charAt(0);
 	}
 	
 	/**

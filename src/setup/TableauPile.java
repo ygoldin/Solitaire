@@ -63,22 +63,24 @@ public class TableauPile extends SolitairePile {
 		for(int i = 0; i < numberOfCards; i++) {
 			temp.add(otherPile.cards.pop());
 		}
-		Stack<Card> addTo;
-		if(!canAddToPile(temp.peek())) {
-			addTo = otherPile.cards;
+		if(!canAddToPile(temp.peek())) { //put them back
+			moveAllFromStack(temp, otherPile.cards);
+			return false;
 		} else {
-			addTo = cards;
-		}
-		while(!temp.isEmpty()) {
-			addTo.push(temp.pop());
-		}
-		
-		if(addTo == cards) {
+			moveAllFromStack(temp, cards);
 			visibleCards += numberOfCards;
 			otherPile.visibleCards -= numberOfCards;
+			if(!otherPile.isEmpty()) {
+				otherPile.visibleCards++; //new visible card
+			}
 			return true;
 		}
-		return false;
+	}
+	
+	private void moveAllFromStack(Stack<Card> start, Stack<Card> end) {
+		while(!start.isEmpty()) {
+			end.push(start.pop());
+		}
 	}
 	
 	/**

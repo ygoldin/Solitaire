@@ -11,9 +11,11 @@ public class Solitaire {
 			SolitaireModel model = new SolitaireModel();
 			Scanner input = new Scanner(System.in);
 			while(!model.gameOver()) {
+				System.out.println("*****");
 				System.out.println(model);
-				System.out.println();
+				System.out.println("*****");
 				oneMove(model, input);
+				System.out.println();
 			}
 			input.close();
 		} while(playAgain());
