@@ -105,8 +105,9 @@ public class Solitaire {
 				"What foundation (1-" + Card.Suit.values().length + ")?");
 		if(!model.canMoveTableauCardToFoundation(tableau, foundation)) {
 			System.out.println("Couldn't move card");
+		} else {
+			model.moveTableauCardToFoundation(tableau, foundation);
 		}
-		model.moveTableauCardToFoundation(tableau, foundation);
 	}
 	
 	private static int getFoundationOrTableau(SolitaireModel model, Scanner input, int max,
