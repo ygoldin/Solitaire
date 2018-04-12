@@ -7,9 +7,9 @@ import setup.Card;
 public class Solitaire {
 
 	public static void main(String[] args) {
+		Scanner input = new Scanner(System.in);
 		do {
 			SolitaireModel model = new SolitaireModel();
-			Scanner input = new Scanner(System.in);
 			while(!model.gameOver()) {
 				System.out.println("*****");
 				System.out.println(model);
@@ -17,9 +17,8 @@ public class Solitaire {
 				oneMove(model, input);
 				System.out.println();
 			}
-			input.close();
-		} while(playAgain());
-
+		} while(playAgain(input));
+		input.close();
 	}
 	
 	private static void oneMove(SolitaireModel model, Scanner input) {
@@ -156,8 +155,9 @@ public class Solitaire {
 		}
 	}
 	
-	private static boolean playAgain() {
-		return false;
+	private static boolean playAgain(Scanner input) {
+		System.out.println("Game over! Play again? (y/n): ");
+		return input.nextLine().toLowerCase().charAt(0) == 'y';
 	}
 
 }
