@@ -134,6 +134,23 @@ public class SolitaireModel {
 		throw new IllegalStateException("non-existent suit");
 	}
 	
+	public void moveCardFromFoundationToTableau(int foundationIndex, int tableauIndex) {
+		if(!canMoveCardFromFoundationToTableau(foundationIndex, tableauIndex)) {
+			throw new IllegalStateException("cannot move card from foundation to tableau");
+		}
+		Foundation foundation = foundations[foundationIndex];
+		TableauPile pile = tableau[tableauIndex];
+		foundation.moveTopCard(pile);
+	}
+	
+	public boolean canMoveCardFromFoundationToTableau(int foundationIndex, int tableauIndex) {
+		checkInvalidFoundationIndex(foundationIndex);
+		checkInvalidTableauIndex(tableauIndex);
+		Foundation foundation = foundations[foundationIndex];
+		TableauPile pile = tableau[tableauIndex];
+		return foundation.canMoveTopCard(pile);
+	}
+	
 	/* ************************move tableau cards around**************************************** */
 	
 	public boolean moveCardsWithinTableau(int startTableauIndex, int endTableauIndex, int cardsToMove) {

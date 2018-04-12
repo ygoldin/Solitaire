@@ -64,11 +64,15 @@ public class Foundation extends SolitairePile {
 	 * @throws IllegalArgumentException if it is illegal to move the top foundation card to the pile
 	 */
 	public void moveTopCard(TableauPile pile) {
-		exceptionIfEmpty();
-		if(!pile.canAddToPile(cards.peek())) {
+		if(!canMoveTopCard(pile)) {
 			throw new IllegalArgumentException("cannot move card to the pile");
 		}
 		pile.addVisibleCard(cards.pop());
+	}
+	
+	public boolean canMoveTopCard(TableauPile pile) {
+		exceptionIfEmpty();
+		return pile.canAddToPile(cards.peek());
 	}
 	
 	/**
