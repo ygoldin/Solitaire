@@ -65,18 +65,18 @@ public class SolitaireModel {
 	}
 	
 	/**
-	 * moves the top card from the waste pile to the given foundation
+	 * moves the top card from the waste pile to the matching foundation
 	 * 
-	 * @param foundationIndex Which foundation pile to move the card to
 	 * @throws IllegalStateException if the waste pile is empty
-	 * @throws IllegalArgumentException if given an invalid foundation index
 	 * @throws IllegalArgumentException if the top card cannot be moved to the foundation
 	 */
-	public void moveTopWasteCardToFoundation(int foundationIndex) {
-		if(!canMoveTopWasteCardToFoundation(foundationIndex)) {
+	public void moveTopWasteCardToFoundation() {
+		if(!canMoveTopWasteCardToFoundation()) {
 			throw new IllegalArgumentException("cannot move top waste card to foundation");
 		}
-		foundations[foundationIndex].addCard(waste.removeTopCard());		
+		Card topCard = waste.removeTopCard();
+		int foundationIndex = foundationForCardSuit(topCard);
+		foundations[foundationIndex].addCard(topCard);		
 	}
 	
 	/**
@@ -97,17 +97,16 @@ public class SolitaireModel {
 	/* ************************check if top waste card can be moved***************************** */
 	
 	/**
-	 * checks if it is legal to move the top card from the waste pile to the given foundation
+	 * checks if it is legal to move the top card from the waste pile to the matching foundation
 	 * 
-	 * @param foundationIndex Which foundation pile to move the card to
-	 * @return true if the top card can be moved to the given foundation, false otherwise
+	 * @return true if the top card can be moved to the foundation of its suit, false otherwise
 	 * @throws IllegalStateException if the waste pile is empty
-	 * @throws IllegalArgumentException if given an invalid foundation index
 	 */
-	public boolean canMoveTopWasteCardToFoundation(int foundationIndex) {
+	public boolean canMoveTopWasteCardToFoundation() {
 		checkEmptyWaste();
-		checkInvalidFoundationIndex(foundationIndex);
-		return foundations[foundationIndex].canAddCard(waste.peekAtTopCard());
+		Card topCard = waste.peekAtTopCard();
+		int foundationIndex = foundationForCardSuit(topCard);
+		return foundations[foundationIndex].canAddCard(topCard);
 	}
 	
 	/**
@@ -122,6 +121,17 @@ public class SolitaireModel {
 		checkEmptyWaste();
 		checkInvalidTableauIndex(tableauIndex);
 		return tableau[tableauIndex].canAddToPile(waste.peekAtTopCard());
+	}
+	
+	/* ************************find which foundation a card fits in***************************** */
+	
+	private int foundationForCardSuit(Card card) {
+		for(int i = 0; i < foundations.length; i++) {
+			if(card.suit == foundations[i].foundationSuit) {
+				return i;
+			}
+		}
+		throw new IllegalStateException("non-existent suit");
 	}
 	
 	/* ************************move tableau cards around**************************************** */

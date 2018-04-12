@@ -29,7 +29,7 @@ public class Solitaire {
 		} else if(choice == 2) {
 			moveWasteToStock(model);
 		} else if(choice == 3) {
-			moveTopWasteCardToFoundation(model, input);
+			moveTopWasteCardToFoundation(model);
 		} else if(choice == 4) {
 			moveTopWasteCardToTableau(model, input);
 		} else if(choice == 5) {
@@ -57,16 +57,14 @@ public class Solitaire {
 		}
 	}
 	
-	private static void moveTopWasteCardToFoundation(SolitaireModel model, Scanner input) {
+	private static void moveTopWasteCardToFoundation(SolitaireModel model) {
 		if(model.wasteIsEmpty()) {
 			System.out.println("Waste is empty");
 		} else {
-			int suits = Card.Suit.values().length;
-			int choice = getFoundationOrTableau(model, input, suits, "What foundation (1-" + suits + ")? ");
-			if(!model.canMoveTopWasteCardToFoundation(choice)) {
-				System.out.println("Cannot move top waste card to foundation " + choice);
+			if(!model.canMoveTopWasteCardToFoundation()) {
+				System.out.println("Cannot move top waste card to foundation");
 			} else {
-				model.moveTopWasteCardToFoundation(choice);
+				model.moveTopWasteCardToFoundation();
 			}
 		}
 	}
