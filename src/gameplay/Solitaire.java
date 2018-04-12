@@ -99,12 +99,10 @@ public class Solitaire {
 	private static void moveTopTableauCardToFoundation(SolitaireModel model, Scanner input) {
 		int tableau = getFoundationOrTableau(model, input, SolitaireModel.TABLEAU_SIZE,
 				"What tableau pile (1-" + SolitaireModel.TABLEAU_SIZE + ")?");
-		int foundation = getFoundationOrTableau(model, input, Card.Suit.values().length,
-				"What foundation (1-" + Card.Suit.values().length + ")?");
-		if(!model.canMoveTableauCardToFoundation(tableau, foundation)) {
+		if(!model.canMoveTableauCardToFoundation(tableau)) {
 			System.out.println("Couldn't move card");
 		} else {
-			model.moveTableauCardToFoundation(tableau, foundation);
+			model.moveTableauCardToFoundation(tableau);
 		}
 	}
 	

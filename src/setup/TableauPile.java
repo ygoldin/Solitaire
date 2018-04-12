@@ -100,6 +100,11 @@ public class TableauPile extends SolitairePile {
 		}
 	}
 	
+	public Card peekAtTopCard() {
+		exceptionIfEmpty();
+		return cards.peek();
+	}
+	
 	/**
 	 * moves the top card from the tableau pile to the given foundation pile
 	 * 

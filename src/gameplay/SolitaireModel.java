@@ -150,17 +150,23 @@ public class SolitaireModel {
 		return end.addStackOfCards(start, cardsToMove);
 	}
 	
-	public void moveTableauCardToFoundation(int tableauIndex, int foundationIndex) {
-		if(!canMoveTableauCardToFoundation(tableauIndex, foundationIndex)) {
+	public void moveTableauCardToFoundation(int tableauIndex) {
+		if(!canMoveTableauCardToFoundation(tableauIndex)) {
 			throw new IllegalArgumentException("can't move card to foundation");
 		}
-		tableau[tableauIndex].moveTopCard(foundations[foundationIndex]);
+		TableauPile pile = tableau[tableauIndex];
+		int foundationIndex = foundationForCardSuit(pile.peekAtTopCard());
+		pile.moveTopCard(foundations[foundationIndex]);
 	}
 	
-	public boolean canMoveTableauCardToFoundation(int tableauIndex, int foundationIndex) {
+	public boolean canMoveTableauCardToFoundation(int tableauIndex) {
 		checkInvalidTableauIndex(tableauIndex);
-		checkInvalidFoundationIndex(foundationIndex);
-		return tableau[tableauIndex].canMoveTopCardToFoundation(foundations[foundationIndex]);		
+		if(tableauPileIsEmpty(tableauIndex)) {
+			return false;
+		}
+		TableauPile pile = tableau[tableauIndex];
+		int foundationIndex = foundationForCardSuit(pile.peekAtTopCard());
+		return pile.canMoveTopCardToFoundation(foundations[foundationIndex]);		
 	}
 	
 	/* ************************check if any pile is empty*************************************** */
