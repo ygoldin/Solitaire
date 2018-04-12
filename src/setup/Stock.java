@@ -1,10 +1,9 @@
 package setup;
 
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.Stack;
 
 public class Stock extends SolitairePile {
-	private Queue<Card> cards;
+	private Stack<Card> cards;
 	private final Waste associatedWastePile;
 	
 	/**
@@ -14,9 +13,9 @@ public class Stock extends SolitairePile {
 	 * @param associatedWaste The waste pile where all discarded cards from the stock will be placed
 	 */
 	public Stock(Deck cardDeck, Waste associatedWaste) {
-		cards = new LinkedList<>();
+		cards = new Stack<>();
 		while(!cardDeck.isEmpty()) {
-			cards.add(cardDeck.removeRandomCard());
+			cards.push(cardDeck.removeRandomCard());
 		}
 		associatedWastePile = associatedWaste;
 	}
@@ -28,7 +27,7 @@ public class Stock extends SolitairePile {
 	 */
 	public void removeTopCard() {
 		exceptionIfEmpty();
-		associatedWastePile.addCard(cards.remove());
+		associatedWastePile.addCard(cards.pop());
 	}
 	
 	/**
@@ -45,7 +44,7 @@ public class Stock extends SolitairePile {
 		}
 		
 		while(!associatedWastePile.isEmpty()) {
-			cards.add(associatedWastePile.removeTopCard());
+			cards.push(associatedWastePile.removeTopCard());
 		}
 	}
 	
