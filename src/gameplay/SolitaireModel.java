@@ -125,6 +125,7 @@ public class SolitaireModel {
 	
 	/* ************************find which foundation a card fits in***************************** */
 	
+	//returns the index representing the foundation matching the card's suit
 	private int foundationForCardSuit(Card card) {
 		for(int i = 0; i < foundations.length; i++) {
 			if(card.suit == foundations[i].foundationSuit) {
@@ -134,6 +135,14 @@ public class SolitaireModel {
 		throw new IllegalStateException("non-existent suit");
 	}
 	
+	/**
+	 * moves the top card from the given foundation to the given tableau pile
+	 * 
+	 * @param foundationIndex The foundation pile to move from
+	 * @param tableauIndex The tableau pile to move to
+	 * @throws IllegalArgumentException if given an invalid foundation or tableau index
+	 * @throws IllegalArgumentException if it is not legal to perform that move
+	 */
 	public void moveCardFromFoundationToTableau(int foundationIndex, int tableauIndex) {
 		if(!canMoveCardFromFoundationToTableau(foundationIndex, tableauIndex)) {
 			throw new IllegalStateException("cannot move card from foundation to tableau");
@@ -143,9 +152,20 @@ public class SolitaireModel {
 		foundation.moveTopCard(pile);
 	}
 	
+	/**
+	 * checks if it's legal to move the top card from the given foundation to the given tableau pile
+	 * 
+	 * @param foundationIndex The foundation pile to move from
+	 * @param tableauIndex The tableau pile to move to
+	 * @return true if the foundation isn't empty and the move is legal, false otherwise
+	 * @throws IllegalArgumentException if given an invalid foundation or tableau index
+	 */
 	public boolean canMoveCardFromFoundationToTableau(int foundationIndex, int tableauIndex) {
 		checkInvalidFoundationIndex(foundationIndex);
 		checkInvalidTableauIndex(tableauIndex);
+		if(foundationIsEmpty(foundationIndex)) {
+			return false;
+		}
 		Foundation foundation = foundations[foundationIndex];
 		TableauPile pile = tableau[tableauIndex];
 		return foundation.canMoveTopCard(pile);
@@ -153,6 +173,15 @@ public class SolitaireModel {
 	
 	/* ************************move tableau cards around**************************************** */
 	
+	/**
+	 * moves the given number of cards from one tableau pile to the other
+	 * 
+	 * @param startTableauIndex The tableau pile to start at
+	 * @param endTableauIndex The tableau pile to move to
+	 * @param cardsToMove The number of cards to move
+	 * @return true if the move was successful, false otherwise
+	 * @throws IllegalArgumentException if given an invalid start or end tableau index
+	 */
 	public boolean moveCardsWithinTableau(int startTableauIndex, int endTableauIndex, int cardsToMove) {
 		checkInvalidTableauIndex(startTableauIndex);
 		checkInvalidTableauIndex(endTableauIndex);
@@ -167,6 +196,12 @@ public class SolitaireModel {
 		return end.addStackOfCards(start, cardsToMove);
 	}
 	
+	/**
+	 * moves the top card from the given tableau pile to the foundation matching the card's suit
+	 * @param tableauIndex The tableau pile to move from
+	 * @throws IllegalArgumentException if given an invalid tableau index
+	 * @throws IllegalArgumentException if the move is illegal
+	 */
 	public void moveTableauCardToFoundation(int tableauIndex) {
 		if(!canMoveTableauCardToFoundation(tableauIndex)) {
 			throw new IllegalArgumentException("can't move card to foundation");
@@ -176,6 +211,13 @@ public class SolitaireModel {
 		pile.moveTopCard(foundations[foundationIndex]);
 	}
 	
+	/**
+	 * checks if it's legal to move the top card from the given tableau pile to the foundation matching
+	 * the card's suit
+	 * @param tableauIndex The tableau pile to move from
+	 * @return true if the pile is not empty and the card can be moved to the foundation, false otherwise
+	 * @throws IllegalArgumentException if given an invalid tableau index
+	 */
 	public boolean canMoveTableauCardToFoundation(int tableauIndex) {
 		checkInvalidTableauIndex(tableauIndex);
 		if(tableauPileIsEmpty(tableauIndex)) {
