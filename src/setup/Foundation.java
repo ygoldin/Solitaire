@@ -70,6 +70,13 @@ public class Foundation extends SolitairePile {
 		pile.addVisibleCard(cards.pop());
 	}
 	
+	/**
+	 * checks if the top card can be moved to the given tableau pile
+	 * 
+	 * @param pile The pile to move the card to
+	 * @return true if the move is legal, false otherwise
+	 * @throws IllegalStateException if this is empty
+	 */
 	public boolean canMoveTopCard(TableauPile pile) {
 		exceptionIfEmpty();
 		return pile.canAddToPile(cards.peek());

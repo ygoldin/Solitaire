@@ -77,6 +77,7 @@ public class TableauPile extends SolitairePile {
 		}
 	}
 	
+	//moves all cards from start to end
 	private void moveAllFromStack(Stack<Card> start, Stack<Card> end) {
 		while(!start.isEmpty()) {
 			end.push(start.pop());
@@ -100,6 +101,12 @@ public class TableauPile extends SolitairePile {
 		}
 	}
 	
+	/**
+	 * looks at the top card on the pile
+	 * 
+	 * @return the card on top (without removing it)
+	 * @throws IllegalStateException if this is empty
+	 */
 	public Card peekAtTopCard() {
 		exceptionIfEmpty();
 		return cards.peek();
@@ -108,8 +115,9 @@ public class TableauPile extends SolitairePile {
 	/**
 	 * moves the top card from the tableau pile to the given foundation pile
 	 * 
-	 * @param pile the foundation pile to move the card to
-	 * @throws IllegalStateException if the tableau pile is empty
+	 * @param foundation The foundation pile to move the card to
+	 * @throws IllegalStateException if this is empty
+	 * @throws IllegalArgumentException if the move is invalid
 	 */
 	public void moveTopCard(Foundation foundation) {
 		if(!canMoveTopCardToFoundation(foundation)) {
@@ -121,6 +129,13 @@ public class TableauPile extends SolitairePile {
 		} 
 	}
 	
+	/**
+	 * checks if the top card from this pile can be moved to the given foundation
+	 * 
+	 * @param foundation The foundation pile to move the card to
+	 * @return true if the move is legal
+	 * @throws IllegalStateException if this is empty
+	 */
 	public boolean canMoveTopCardToFoundation(Foundation foundation) {
 		exceptionIfEmpty();
 		return foundation.canAddCard(cards.peek());
