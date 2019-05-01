@@ -178,22 +178,23 @@ public class SolitaireModel {
 	 * 
 	 * @param startTableauIndex The tableau pile to start at
 	 * @param endTableauIndex The tableau pile to move to
-	 * @param cardsToMove The number of cards to move
 	 * @return true if the move was successful, false otherwise
 	 * @throws IllegalArgumentException if given an invalid start or end tableau index
 	 */
-	public boolean moveCardsWithinTableau(int startTableauIndex, int endTableauIndex, int cardsToMove) {
+	public boolean moveCardsWithinTableau(int startTableauIndex, int endTableauIndex) {
 		checkInvalidTableauIndex(startTableauIndex);
 		checkInvalidTableauIndex(endTableauIndex);
 		if(startTableauIndex == endTableauIndex) {
 			return false;
 		}
 		TableauPile start = tableau[startTableauIndex];
-		if(start.numVisibleCards() < cardsToMove) {
-			return false;
-		}
 		TableauPile end = tableau[endTableauIndex];
-		return end.addStackOfCards(start, cardsToMove);
+		for (int cardsToMove = 1; cardsToMove <= start.numVisibleCards(); cardsToMove++) {
+			if (end.addStackOfCards(start, cardsToMove)) {
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	/**

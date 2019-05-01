@@ -89,10 +89,7 @@ public class Solitaire {
 				"What tableau pile do you want to move from (1-" + SolitaireModel.TABLEAU_SIZE + ")?");
 		int pile2 = getFoundationOrTableau(input, SolitaireModel.TABLEAU_SIZE,
 				"What tableau pile do you want to move to (1-" + SolitaireModel.TABLEAU_SIZE + ")?");
-		System.out.print("How many cards do you want to move? ");
-		int cards = input.nextInt();
-		input.nextLine();
-		if(!model.moveCardsWithinTableau(pile1, pile2, cards)) {
+		if(!model.moveCardsWithinTableau(pile1, pile2)) {
 			System.out.println("Couldn't move cards");
 		}
 	}
