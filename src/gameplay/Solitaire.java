@@ -31,14 +31,12 @@ public class Solitaire {
 		if(choice == 1) {
 			flipStockCard(model);
 		} else if(choice == 2) {
-			moveWasteToStock(model);
-		} else if(choice == 3) {
 			moveTopWasteCardToFoundation(model);
-		} else if(choice == 4) {
+		} else if(choice == 3) {
 			moveTopWasteCardToTableau(model, input);
-		} else if(choice == 5) {
+		} else if(choice == 4) {
 			moveCardsBetweenTableauPiles(model, input);
-		} else if(choice == 6){
+		} else if(choice == 5){
 			moveTopTableauCardToFoundation(model, input);
 		} else {
 			moveTopFoundationCardToTableau(model, input);
@@ -48,21 +46,13 @@ public class Solitaire {
 	//flips the stock card onto the waste
 	private static void flipStockCard(SolitaireModel model) {
 		if(model.stockIsEmpty()) {
-			System.out.println("Stock is empty");
-		} else {
-			model.moveTopStockCardToWaste();
-		}
-	}
-	
-	//moves all of the cards in the waste back onto the stock
-	private static void moveWasteToStock(SolitaireModel model) {
-		if(!model.stockIsEmpty()) {
-			System.out.println("Stock not empty");
-		} else if(model.wasteIsEmpty()) {
-			System.out.println("Waste is empty");
-		} else {
+			if (model.wasteIsEmpty()) {
+				System.out.println("Stock and waste are empty");
+				return;
+			}
 			model.moveWasteToStock();
 		}
+		model.moveTopStockCardToWaste();
 	}
 	
 	//moves the top waste card to the relative foundation
@@ -144,10 +134,8 @@ public class Solitaire {
 	
 	//returns what kind of movement the client wants to do
 	private static int getMoveChoice(Scanner input) {
-		String[] options = {"Flip the next stock card", "Move the waste back to the stock",
-				"Move the top waste card to a foundation", "Move the top waste card to a tableau pile",
-				"Move cards between tableau piles", "Move the top card on a tableau pile to a foundation",
-				"Move the top card on a foundation to a tableau pile"
+		String[] options = {"Flip the next stock card", "Waste -> Foundation", "Waste -> Tableau",
+				"Move cards between tableau piles", "Tableau -> Foundation", "Foundation -> Tableau"
 		};
 		printOptions(options);
 		int choice = input.nextInt();
@@ -165,7 +153,7 @@ public class Solitaire {
 	private static void printOptions(String[] options) {
 		System.out.println("What do you want to do? ");
 		for(int i = 0; i < options.length; i++) {
-			System.out.println("\t" + options[i] + " (" + (i+1) + ")");
+			System.out.println("\t(" + (i+1) + ") " + options[i]);
 		}
 	}
 	
